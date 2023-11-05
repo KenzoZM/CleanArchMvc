@@ -37,14 +37,14 @@ namespace CleanArchMvc.Domain.Entitites
 
         private void ValidateDomain(string name, string discription, decimal price, int stock, string image)
         {
-            DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Invalid name or Name is required");
-            DomainExceptionValidation.When(name.Length < 3, "Name is too short, minimun 3 characters");
+            DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Invalid name, Name is required");
+            DomainExceptionValidation.When(name.Length < 3, "Name too short, minimun 3 characters");
 
-            DomainExceptionValidation.When(string.IsNullOrEmpty(discription), "Invalid discription or Discription is required");
+            DomainExceptionValidation.When(string.IsNullOrEmpty(discription), "Invalid discription, Discription is required");
             DomainExceptionValidation.When(discription.Length < 5, "invalid discription, too short, minimun 5 characteres");
 
             DomainExceptionValidation.When(price < 0, "invalid price value");
-            DomainExceptionValidation.When(price < 0, "invalid stock value");
+            DomainExceptionValidation.When(stock < 0, "invalid stock value");
 
             DomainExceptionValidation.When(image.Length > 250, "invalid image name, too long, maximun 250 characteres");
 
