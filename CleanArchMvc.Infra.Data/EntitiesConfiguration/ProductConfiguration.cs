@@ -22,7 +22,7 @@ namespace CleanArchMvc.Infra.Data.EntitiesConfiguration
             // configurando a propriedade description com no maximo 200 caracteres é o tornando obrigatorio não aceitando valores nulos
             builder.Property(p => p.Description).HasMaxLength(200).IsRequired();
 
-            // configurando a propriedade Price com uma precisão de 10 posições e 2 casas decimais.
+            // configurando a propriedade Price com uma precisão de 10 com 2 casas decimais.
             builder.Property(p => p.Price).HasPrecision(10,2).IsRequired();
 
             // configurando o relacionamento de 1 para muitos entre categoria e produtos e reforçando que CategoryId é a chave estrangeira
