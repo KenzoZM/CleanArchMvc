@@ -55,7 +55,5 @@ namespace CleanArchMvc.Infra.Data.Repositories
         {
             return await _categoryContext.Categories.ToListAsync();
         }
-
-
     }
 }
