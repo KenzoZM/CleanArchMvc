@@ -17,31 +17,31 @@ namespace CleanArchMvc.Domain.Entitites
         public int Stock { get; private set; }
         public string Image { get; private set; }
 
-        public Product(string name, string discription, decimal price, int stock, string image)
+        public Product(string name, string description, decimal price, int stock, string image)
         {
-            ValidateDomain(name, discription, price, stock, image);
+            ValidateDomain(name, description, price, stock, image);
         }
 
-        public Product(int id, string name, string discription, decimal price, int stock, string image)
+        public Product(int id, string name, string description, decimal price, int stock, string image)
         {
             DomainExceptionValidation.When(id < 0, "Invalid id value");
             Id = id;
-            ValidateDomain(name, discription, price, stock, image);
+            ValidateDomain(name, description, price, stock, image);
         }
 
-        public void Update(string name, string discription, decimal price, int stock, string image, int categoryId)
+        public void Update(string name, string description, decimal price, int stock, string image, int categoryId)
         {
-            ValidateDomain(name, discription, price, stock, image);
+            ValidateDomain(name, description, price, stock, image);
             CategoryId = categoryId;
         }
 
-        private void ValidateDomain(string name, string discription, decimal price, int stock, string image)
+        private void ValidateDomain(string name, string description, decimal price, int stock, string image)
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Invalid name, Name is required");
             DomainExceptionValidation.When(name.Length < 3, "Name too short, minimun 3 characters");
 
-            DomainExceptionValidation.When(string.IsNullOrEmpty(discription), "Invalid discription, Discription is required");
-            DomainExceptionValidation.When(discription.Length < 5, "invalid discription, too short, minimun 5 characteres");
+            DomainExceptionValidation.When(string.IsNullOrEmpty(description), "Invalid description, Description is required");
+            DomainExceptionValidation.When(description.Length < 5, "invalid description, too short, minimun 5 characteres");
 
             DomainExceptionValidation.When(price < 0, "invalid price value");
             DomainExceptionValidation.When(stock < 0, "invalid stock value");
@@ -49,7 +49,7 @@ namespace CleanArchMvc.Domain.Entitites
             DomainExceptionValidation.When(image?.Length > 250, "invalid image name, too long, maximun 250 characteres");
 
             Name = name;
-            Description = discription;
+            Description = description;
             Price = price;
             Stock = stock;
             Image = image;
