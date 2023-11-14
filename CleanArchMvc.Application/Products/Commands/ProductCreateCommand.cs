@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.Products.Commands
 {
-    internal class ProductCreateCommand
+    public class ProductCreateCommand : ProductsCommand
     {
     }
 }
