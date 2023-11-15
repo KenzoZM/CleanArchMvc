@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.Products.Handles
 {
+    // classes Handler tem que implementar a IRequestHandler passar o comando que vão processar e o tipo de retorno
     public class ProductCreateCommandHandler : IRequestHandler<ProductCreateCommand, Product>
     {
         private readonly IProductRepository _productRepository;
@@ -17,6 +18,7 @@ namespace CleanArchMvc.Application.Products.Handles
         {
             _productRepository = productRepository;
         }
+        // onde é definido a lógica e o processamento do comando
         public async Task<Product> Handle(ProductCreateCommand request, CancellationToken cancellationToken)
         {
             var product = new Product(request.Name, request.Description, request.Price, request.Stock, request.Image);

@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.Products.Handles
 {
-    public class GetProductsByIdQueryHandler : IRequestHandler<GetProductsQuery, IEnumerable<Product>>
+    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IEnumerable<Product>>
     {
         private readonly IProductRepository _productRepository;
-        public GetProductsByIdQueryHandler(IProductRepository productRepository)
+        public GetProductsQueryHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

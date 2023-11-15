@@ -15,7 +15,7 @@ namespace CleanArchMvc.Application.Products.Handles
         private readonly IProductRepository _productRepository;
         public ProductUpdateCommandHandler(IProductRepository productRepository)
         {
-            _productRepository = productRepository;
+            _productRepository = productRepository ?? throw new ArgumentException(nameof(productRepository));
         }
         public async Task<Product> Handle(ProductUpdateCommand request, CancellationToken cancellationToken)
         {
