@@ -1,5 +1,7 @@
 ﻿
+using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using CleanArchMvc.Domain.Entitites;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +29,7 @@ namespace CleanArchMvc.WebUI.Controllers
         }
 
         // GET: CategoriesController/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -35,16 +38,14 @@ namespace CleanArchMvc.WebUI.Controllers
         // POST: CategoriesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(CategoryDTO categoryDTO)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                await _categoryService.AddCategoryAsync(categoryDTO);
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(categoryDTO);
         }
 
         // GET: CategoriesController/Edit/5
