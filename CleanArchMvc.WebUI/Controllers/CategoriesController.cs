@@ -49,24 +49,39 @@ namespace CleanArchMvc.WebUI.Controllers
         }
 
         // GET: CategoriesController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var categoryDto = await _categoryService.GetCategoryByIdAsync(id);
+            if (categoryDto == null)
+            {
+                return NotFound();
+            }
+            return View(categoryDto);
         }
 
         // POST: CategoriesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(CategoryDTO categoryDTO)
         {
-            try
+            if(ModelState.IsValid)
             {
+                try
+                {
+                    await _categoryService.UpdateCategoryAsync(categoryDTO);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("state is not valid");
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(categoryDTO);
         }
 
         // GET: CategoriesController/Delete/5
