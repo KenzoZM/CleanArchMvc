@@ -22,12 +22,6 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(categories);
         }
 
-        // GET: CategoriesController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: CategoriesController/Create
         [HttpGet]
         public ActionResult Create()
@@ -107,6 +101,22 @@ namespace CleanArchMvc.WebUI.Controllers
         {
             await _categoryService.RemoveCategoryAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: CategoriesController/Details/5
+        [HttpGet]
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var categoryDto = await _categoryService.GetCategoryByIdAsync(id);
+            if (categoryDto == null)
+            {
+                return NotFound();
+            }
+            return View(categoryDto);
         }
     }
 }
