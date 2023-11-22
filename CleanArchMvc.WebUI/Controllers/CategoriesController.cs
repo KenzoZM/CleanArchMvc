@@ -85,24 +85,28 @@ namespace CleanArchMvc.WebUI.Controllers
         }
 
         // GET: CategoriesController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet()]
+        public async Task<ActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var categoryDto = await _categoryService.GetCategoryByIdAsync(id);
+            if (categoryDto == null)
+            {
+                return NotFound();
+            }
+            return View(categoryDto);
         }
 
         // POST: CategoriesController/Delete/5
-        [HttpPost]
+        [HttpPost(), ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _categoryService.RemoveCategoryAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
