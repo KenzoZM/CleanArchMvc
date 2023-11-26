@@ -1,4 +1,5 @@
-﻿using CleanArchMvc.Domain.Entitites;
+﻿using CleanArchMvc.Domain.Entities;
+using CleanArchMvc.Domain.Entitites;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

@@ -1,0 +1,51 @@
+﻿@model CleanArchMvc.Application.DTOs.ProductDTO
+<h3>Delete Product</h3>
+<h5>Are you sure you want delete this?</h5>
+<div>
+    <hr />
+    <dl class="row">
+        <dl class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dl class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dl class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dl class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Stock)
+        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
+        <dl class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+        <dl class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+    </dl>
+
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Back To List</a>
+    </form>
+</div>

@@ -1,12 +1,9 @@
-﻿using CleanArchMvc.Domain.Entitites;
+﻿using CleanArchMvc.Domain.Entities;
+using CleanArchMvc.Domain.Entitites;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.DTOs
 {
@@ -14,35 +11,38 @@ namespace CleanArchMvc.Application.DTOs
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "The Name is required")]
+        [Required(ErrorMessage = "The Name is Required")]
         [MinLength(3)]
         [MaxLength(100)]
         [DisplayName("Name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        [Required(ErrorMessage = "The Description is required")]
+        [Required(ErrorMessage = "The Description is Required")]
         [MinLength(5)]
         [MaxLength(200)]
         [DisplayName("Description")]
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
-        [Required(ErrorMessage = "The Price is required")]
+        [Required(ErrorMessage = "The Price is Required")]
         [Column(TypeName = "decimal(18,2)")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
-        [DisplayName("Description")]
-        public decimal Price { get; private set; }
+        [DataType(DataType.Currency)]
+        [DisplayName("Price")]
+        public decimal Price { get; set; }
 
-        [Required(ErrorMessage = "the stock is required")]
+        [Required(ErrorMessage = "The Stock is Required")]
         [Range(1, 9999)]
         [DisplayName("Stock")]
-        public int Stock { get; private set; }
+        public int Stock { get; set; }
 
-        [MinLength(250)]
+        [MaxLength(250)]
         [DisplayName("Product Image")]
-        public string Image { get; private set; }
+        public string Image { get; set; }
+
+        public Category Category { get; set; }
 
         [DisplayName("Categories")]
-        public Category Category { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
     }
 }
+

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Products.Commands;
+using CleanArchMvc.Domain.Entities;
 using CleanArchMvc.Domain.Entitites;
 using System;
 using System.Collections.Generic;

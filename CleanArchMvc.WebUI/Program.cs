@@ -3,8 +3,11 @@ using CleanArchMvc.Infra.IoC;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddControllersWithViews();
+
+// GET: CategoriesController/Details/5
+// POST: CategoriesController/Delete/5
 
 var app = builder.Build();
 

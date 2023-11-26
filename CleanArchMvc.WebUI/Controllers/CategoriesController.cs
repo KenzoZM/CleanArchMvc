@@ -1,9 +1,8 @@
-﻿
-using CleanArchMvc.Application.DTOs;
+﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
-using CleanArchMvc.Domain.Entitites;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
@@ -16,106 +15,92 @@ namespace CleanArchMvc.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var categories = await _categoryService.GetCategoriesAsync();
             return View(categories);
         }
 
-        // GET: CategoriesController/Create
-        [HttpGet]
-        public ActionResult Create()
+        // GET: CategoriesController/Create/5
+        [HttpGet()]
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: CategoriesController/Create
+        // POST: CategoriesController/Create/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CategoryDTO categoryDTO)
+        public async Task<IActionResult> Create(CategoryDTO category)
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.AddCategoryAsync(categoryDTO);
-                return RedirectToAction("Index");
+                await _categoryService.AddCategoryAsync(category);
+                return RedirectToAction(nameof(Index));
             }
-            return View(categoryDTO);
+            return View(category);
         }
 
         // GET: CategoriesController/Edit/5
-        [HttpGet]
-        public async Task<ActionResult> Edit(int? id)
+        [HttpGet()]
+        public async Task<IActionResult> Edit(int? id)
         {
-            if(id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
             var categoryDto = await _categoryService.GetCategoryByIdAsync(id);
-            if (categoryDto == null)
-            {
-                return NotFound();
-            }
+            if (categoryDto == null) return NotFound();
             return View(categoryDto);
         }
 
         // POST: CategoriesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(CategoryDTO categoryDTO)
+        [HttpPost()]
+        public async Task<IActionResult> Edit(CategoryDTO categoryDto)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    await _categoryService.UpdateCategoryAsync(categoryDTO);
+                    await _categoryService.UpdateCategoryAsync(categoryDto);
                 }
                 catch (Exception)
                 {
-                    throw new Exception("state is not valid");
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(categoryDTO);
+            return View(categoryDto);
         }
 
         // GET: CategoriesController/Delete/5
         [HttpGet()]
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
+
             var categoryDto = await _categoryService.GetCategoryByIdAsync(id);
-            if (categoryDto == null)
-            {
-                return NotFound();
-            }
+
+            if (categoryDto == null) return NotFound();
+
             return View(categoryDto);
         }
 
         // POST: CategoriesController/Delete/5
         [HttpPost(), ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _categoryService.RemoveCategoryAsync(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
-        // GET: CategoriesController/Details/5
-        [HttpGet]
-        public async Task<ActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
+
             var categoryDto = await _categoryService.GetCategoryByIdAsync(id);
+
             if (categoryDto == null)
-            {
                 return NotFound();
-            }
+
             return View(categoryDto);
         }
     }

@@ -1,4 +1,4 @@
-using CleanArchMvc.Domain.Entitites;
+using CleanArchMvc.Domain.Entities;
 using FluentAssertions;
 
 namespace CleanArchMvc.Domain.Tests
