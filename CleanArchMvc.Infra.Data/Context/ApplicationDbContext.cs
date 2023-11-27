@@ -1,16 +1,12 @@
 ﻿using CleanArchMvc.Domain.Entities;
 using CleanArchMvc.Domain.Entitites;
+using CleanArchMvc.Infra.Data.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.Infra.Data.Context
 {// contexto de banco de dados // interação com o banco de dados
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     { // definindo as opções de contexto
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         
