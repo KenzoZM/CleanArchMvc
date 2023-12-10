@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# local database
+CleanArchMvc.WebUI/appsettings.json
+
+# local database
+CleanArchMvc.API/appsettings.json
