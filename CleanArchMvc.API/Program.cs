@@ -1,4 +1,6 @@
 using CleanArchMvc.Infra.IoC;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,10 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
 builder.Services.AddInfrastructureAPI(builder.Configuration);
 //ativar autenticação e validar o token
 builder.Services.AddInfrastructureJWT(builder.Configuration);
+// Configurações do Swagger
+builder.Services.AddInfrastructureSwagger();
+
 
 var app = builder.Build();
 
