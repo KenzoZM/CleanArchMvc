@@ -1,10 +1,12 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
 using CleanArchMvc.Domain.Entitites;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -53,10 +55,53 @@ namespace CleanArchMvc.WebUI.Controllers
             }
             return View(productDto);
         }
-    
 
-    // GET: ProductsController/Edit/5
-    [HttpGet()]
+        public async Task<IActionResult> Export()
+        {
+            var dados = await GetData();
+
+            using (XLWorkbook workBook = new XLWorkbook())
+            {
+                workBook.AddWorksheet(dados, "Data Products");
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    workBook.SaveAs(ms);
+                    return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spredsheetml.sheet", "Products.xls");
+                }
+            }
+        }
+
+        private async Task<DataTable> GetData()
+        {
+            DataTable dataTable = new DataTable();
+
+            dataTable.TableName = "Data Products";
+
+            dataTable.Columns.Add("Id", typeof(int));
+            dataTable.Columns.Add("Name", typeof(string));
+            dataTable.Columns.Add("Description", typeof(string));
+            dataTable.Columns.Add("Price", typeof(decimal));
+            dataTable.Columns.Add("Stock", typeof(int));
+            dataTable.Columns.Add("Image", typeof(string));
+            dataTable.Columns.Add("Category", typeof(CategoryDTO));
+            dataTable.Columns.Add("CategoryId", typeof(int));
+
+            var dados = await _productService.GetProductsAsync();
+            if (dados.Any())
+            {
+                foreach (var product in dados) 
+                {
+                    dataTable.Rows.Add(product.Id, product.Name, product.Description, product.Price, product.Stock, product.Image, product.Category, product.CategoryId);
+                }
+            }
+
+            return dataTable;
+        }
+
+
+        // GET: ProductsController/Edit/5
+        [HttpGet()]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();

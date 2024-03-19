@@ -1,19 +1,25 @@
 ﻿@model CleanArchMvc.Application.DTOs.CategoryDTO
 
-<h3>Category Details</h3>
+<div class="container bg-primary p-5 rounded-3 w-50">
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)           
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
-    <a asp-action="Index">Back To List</a>
+    <div class="mb-3 text-center">
+        <h1 class="text-light">Category Details</h1>
+    </div>
+
+    <form>
+        <div class="form-horizontal">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label text-light">Name: </label>
+                <input type="text" class="form-control" asp-for="Name" id="Name" readonly>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2-col-md-10">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Index" class="btn btn-info">Back To List</a>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>

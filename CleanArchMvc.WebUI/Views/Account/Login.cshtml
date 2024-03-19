@@ -1,5 +1,43 @@
 ﻿@model CleanArchMvc.WebUI.Models.LoginViewModel
-<h2>Login</h2>
+
+<div class="container bg-primary p-5 rounded-3 w-50">
+
+    <div class="mb-3 text-center">
+        <h1 class="text-light">Login</h1>
+    </div>
+
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <input type="hidden" asp-for="ReturnUrl" />
+        <div class="form-horizontal">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label text-light">Email: </label>
+                <input type="text" class="form-control" asp-for="Email" id="Name" placeholder="Enter the Email Account">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label text-light">Password: </label>
+                <input type="password" class="form-control" asp-for="Password" id="Name" placeholder="Enter the Password Account">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-dark">Log in</button>
+                    <a asp-action="Register" type="submit" class="btn btn-info text-light">Register a new user</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+<br />
+<br />
+
+@* <h2>Login</h2>
 <div class="row">
     <div class="col-md-10">
         <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal">
@@ -30,6 +68,9 @@
         </form>
     </div>
 </div>
+ *@
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

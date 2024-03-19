@@ -62,7 +62,8 @@ namespace CleanArchMvc.WebUI.Controllers
             else
             {
                 ModelState.Values.SelectMany(v => v.Errors);
-                ModelState.AddModelError(string.Empty, "Invalid register attempt (password must be strong.");
+                ModelState.AddModelError(string.Empty, "Invalid register attempt (password must be strong) " +
+                    "password must have 1 upper char, 1 lower char, numbers and a special character.");
                 return View(model);
             }
         }

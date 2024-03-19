@@ -1,21 +1,26 @@
 ﻿@model CleanArchMvc.Application.DTOs.CategoryDTO
-<h3>Delete Category</h3>
-<h5>Are you sure you want delete this?</h5>
-<div>
-    <hr />
-    <dl class="row">
-        <dl class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dl>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+<div class="container bg-primary p-5 rounded-3 w-50">
 
+    <div class="mb-3 text-center">
+        <h1 class="text-light">Delete Category</h1>
+        <h3 class="text-light">Are you sure you want delete this?</h3>
+    </div>
 
-    <form asp-action="Delete">
+    <form method="post" asp-controller="Categories" asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-action="Index">Back To List</a>
+        <div class="form-horizontal">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label text-light">Name: </label>
+                <input type="text" class="form-control" asp-for="Name" id="Name" readonly>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2-col-md-10">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a asp-action="Index" class="btn btn-info">Back To List</a>
+                </div>
+            </div>
+        </div>
     </form>
 </div>

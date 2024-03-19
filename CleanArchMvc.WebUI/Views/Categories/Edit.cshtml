@@ -1,20 +1,28 @@
 ﻿@model CleanArchMvc.Application.DTOs.CategoryDTO
-<h3>Edit Category</h3>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+<div class="container bg-primary p-5 rounded-3 w-50">
+
+    <div class="mb-3 text-center">
+        <h1 class="text-light">Edit Category</h1>
+    </div>
+
+    <form method="post" asp-controller="Categories" asp-action="Edit">
+        <div class="form-horizontal">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label text-light">Name: </label>
+                <input type="text" class="form-control" asp-for="Name" id="Name" placeholder="Name of Category">
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
+            <br />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary"/>
+                <div class="col-md-offset-2-col-md-10">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <a asp-action="Index" class="btn btn-info">Back To List</a>
+                </div>
             </div>
-        </form>
-    </div>
-</div>
-<div>
-    <a asp-action="Index">Back To List</a>
+        </div>
+    </form>
 </div>
