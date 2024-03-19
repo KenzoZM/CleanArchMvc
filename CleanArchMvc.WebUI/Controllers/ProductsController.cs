@@ -1,5 +1,6 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using CleanArchMvc.Domain.Entitites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -94,6 +95,9 @@ namespace CleanArchMvc.WebUI.Controllers
 
             if (productDto == null) return NotFound();
 
+            var categoryName = productDto.Category?.Name; // Obtém o nome da categoria
+            ViewData["CategoryName"] = categoryName; // Passa o nome da categoria para a view
+
             return View(productDto);
         }
 
@@ -115,6 +119,9 @@ namespace CleanArchMvc.WebUI.Controllers
             var image = Path.Combine(wwwroot, "images\\" + productDto.Image);
             var exists = System.IO.File.Exists(image);
             ViewBag.ImageExist = exists;
+
+            var categoryName = productDto.Category?.Name;
+            ViewData["CategoryName"] = categoryName;
 
             return View(productDto);
         }
