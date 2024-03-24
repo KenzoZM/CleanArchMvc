@@ -1,5 +1,6 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using CleanArchMvc.Infra.IoC;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -27,7 +28,7 @@ namespace CleanArchMvc.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> FetchData(string method, string id)
         {
-            string apiUrl = "https://localhost:44363/api/Categories";
+            string apiUrl = ApiSettings.ApiBaseUrl + "api/Categories";
 
             // Se o método selecionado for GetById e um ID válido for fornecido, ajuste a URL da API
             if (method == "GetById" && !string.IsNullOrEmpty(id))

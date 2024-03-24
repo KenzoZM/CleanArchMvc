@@ -1,5 +1,6 @@
 ﻿using CleanArchMvc.Domain.Account;
 using CleanArchMvc.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
@@ -9,9 +10,11 @@ namespace CleanArchMvc.WebUI.Controllers
     public class AccountController : Controller
     {
         private readonly IAuthenticate _authentication;
-        public AccountController(IAuthenticate authentication)
+        private readonly ILogger<AccountController> _logger;
+        public AccountController(IAuthenticate authentication, ILogger<AccountController> logger)
         {
             _authentication = authentication;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -68,6 +71,29 @@ namespace CleanArchMvc.WebUI.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoginAsAdminTester()
+        {
+            var adminEmail = "admin@localhost";
+            var adminPassword = "Numsey#2021"; 
+
+            var result = await _authentication.Authenticate(adminEmail, adminPassword);
+            if (result)
+            {
+                _logger.LogInformation("User logged in as admin tester."); 
+
+               
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            else
+            {
+                _logger.LogError("Failed to log in as admin tester.");
+
+                return RedirectToAction(nameof(Login));
+            }
+        }
         public async Task<IActionResult> Logout()
         {
             await _authentication.Logout();

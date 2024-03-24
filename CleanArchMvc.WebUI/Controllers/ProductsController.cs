@@ -1,6 +1,7 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
 using CleanArchMvc.Domain.Entitites;
+using CleanArchMvc.Infra.IoC;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +42,7 @@ namespace CleanArchMvc.WebUI.Controllers
         public async Task<IActionResult> FetchData(string method, string id)
         {
             ModelState.Remove("Category");
-            string apiUrl = "https://localhost:44363/api/Products";
+            string apiUrl = ApiSettings.ApiBaseUrl + "api/Products";
 
             // Se o método selecionado for GetById e um ID válido for fornecido, ajuste a URL da API
             if (method == "GetById" && !string.IsNullOrEmpty(id))
@@ -116,6 +117,9 @@ namespace CleanArchMvc.WebUI.Controllers
                 await _productService.CreateProductAsync(productDto);
                 return RedirectToAction(nameof(Index));
             }
+
+            var categories = await _categoryService.GetCategoriesAsync();
+            ViewBag.CategoryId = new SelectList(categories, "Id", "Name");
             return View(productDto);
         }
 
@@ -192,6 +196,8 @@ namespace CleanArchMvc.WebUI.Controllers
                 await _productService.UpdateProductAsync(productDto);
                 return RedirectToAction(nameof(Index));
             }
+            var categories = await _categoryService.GetCategoriesAsync();
+            ViewBag.CategoryId = new SelectList(categories, "Id", "Name");
             return View(productDto);
         }
 

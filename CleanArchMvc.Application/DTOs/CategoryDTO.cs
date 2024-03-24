@@ -16,6 +16,7 @@ namespace CleanArchMvc.Application.DTOs
         [MinLength(3)]
         [MaxLength(100)]
         [DisplayName("Name")]
+        [RegularExpression(@"^[a-zA-Z0-9-\s]*$", ErrorMessage = "Special characters are not allowed in the name")]
         public string Name { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<CleanArchMvc.Application.DTOs.CategoryDTO>
+@using CleanArchMvc.Infra.IoC;
 @using System.Text.Json;
 @{
     ViewData["Title"] = "Página da API";
@@ -9,7 +10,7 @@
 <form method="post" asp-action="FetchData" asp-controller="Categories">
     <div class="form-group">
         <label for="apiUrl">URI da API:</label>
-        <input type="text" id="apiUrl" name="apiUrl" class="form-control" value="https://localhost:44363/api/Categories" readonly />
+        <input type="text" id="apiUrl" name="apiUrl" class="form-control" value="@ApiSettings.ApiBaseUrl/api/Categories" readonly />
     </div>
     <div class="form-group">
         <label for="method">Método:</label>
@@ -42,10 +43,10 @@
             $('#method').change(function () {
                 var selectedMethod = $(this).val();
                 if (selectedMethod == 'GetById') {
-                    $('#apiUrl').val('https://localhost:44363/api/Categories/');
+                    $('#apiUrl').val('@ApiSettings.ApiBaseUrl/api/Categories/');
                     $('#idInput').show();
                 } else {
-                    $('#apiUrl').val('https://localhost:44363/api/Categories');
+                    $('#apiUrl').val('@ApiSettings.ApiBaseUrl/api/Categories');
                     $('#idInput').hide();
                 }
             });

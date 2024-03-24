@@ -17,12 +17,14 @@ namespace CleanArchMvc.Application.DTOs
         [MinLength(3)]
         [MaxLength(100)]
         [DisplayName("Name")]
+        [RegularExpression(@"^[a-zA-Z0-9\s.]*$", ErrorMessage = "Special characters are not allowed in the name")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "The Description is Required")]
         [MinLength(5)]
         [MaxLength(200)]
         [DisplayName("Description")]
+        [RegularExpression(@"^[a-zA-Z0-9\s.]*$", ErrorMessage = "Special characters are not allowed in the Description")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "The Price is Required")]
@@ -39,6 +41,7 @@ namespace CleanArchMvc.Application.DTOs
 
         [MaxLength(250)]
         [DisplayName("Product Image")]
+        [RegularExpression(@"^[a-zA-Z0-9\s.]*$", ErrorMessage = "Special characters are not allowed in the name")]
         public string Image { get; set; }
 
         [JsonIgnore]

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<CleanArchMvc.Application.DTOs.ProductDTO>
+@using CleanArchMvc.Infra.IoC
 @using System.Text.Json;
 @{
     ViewData["Title"] = "Página da API";
@@ -9,7 +10,7 @@
 <form method="post" asp-action="FetchData">
     <div class="form-group">
         <label for="apiUrl">URI da API:</label>
-        <input type="text" id="apiUrl" name="apiUrl" class="form-control" value="https://localhost:44363/api/Products" readonly />
+        <input type="text" id="apiUrl" name="apiUrl" class="form-control" value="@ApiSettings.ApiBaseUrl/api/Products" readonly />
     </div>
     <div class="form-group">
         <label for="method">Método:</label>
@@ -42,10 +43,10 @@
             $('#method').change(function () {
                 var selectedMethod = $(this).val();
                 if (selectedMethod == 'GetById') {
-                    $('#apiUrl').val('https://localhost:44363/api/Products/');
+                    $('#apiUrl').val('@ApiSettings.ApiBaseUrl/api/Products/');
                     $('#idInput').show();
                 } else {
-                    $('#apiUrl').val('https://localhost:44363/api/Products');
+                    $('#apiUrl').val('@ApiSettings.ApiBaseUrl/api/Products');
                     $('#idInput').hide();
                 }
             });
