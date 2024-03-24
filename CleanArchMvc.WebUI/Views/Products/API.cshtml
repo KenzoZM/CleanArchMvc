@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CleanArchMvc.Application.DTOs.ProductDTO>
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Página da API";
+}
+
+<h1>Página da API</h1>
+
+<form method="post" asp-action="FetchData">
+    <div class="form-group">
+        <label for="apiUrl">URI da API:</label>
+        <input type="text" id="apiUrl" name="apiUrl" class="form-control" value="https://localhost:44363/api/Products" readonly />
+    </div>
+    <div class="form-group">
+        <label for="method">Método:</label>
+        <select id="method" name="method" class="form-control">
+            <option value="Get">Get</option>
+            <option value="GetById">GetById</option>
+        </select>
+    </div>
+    <div class="form-group" id="idInput" style="display: none;">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+@if (Model != null)
+{
+    <div>
+        <h2>Resultados:</h2>
+        <pre style="white-space: pre-wrap; word-wrap: break-word;">@JsonSerializer.Serialize(Model, new JsonSerializerOptions { WriteIndented = true })</pre> <!-- Serializando o modelo para JSON e exibindo -->
+    </div>
+}
+<br />
+<br />
+<br />
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#method').change(function () {
+                var selectedMethod = $(this).val();
+                if (selectedMethod == 'GetById') {
+                    $('#apiUrl').val('https://localhost:44363/api/Products/');
+                    $('#idInput').show();
+                } else {
+                    $('#apiUrl').val('https://localhost:44363/api/Products');
+                    $('#idInput').hide();
+                }
+            });
+        });
+    </script>
+}

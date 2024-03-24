@@ -9,7 +9,6 @@ namespace CleanArchMvc.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -40,6 +39,7 @@ namespace CleanArchMvc.API.Controllers
             return Ok(category);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CategoryDTO categoryDto)
         {
@@ -51,6 +51,7 @@ namespace CleanArchMvc.API.Controllers
             return new CreatedAtRouteResult("GetCategory", new {id = categoryDto.Id}, categoryDto);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] CategoryDTO categoryDto)
         {
@@ -64,6 +65,7 @@ namespace CleanArchMvc.API.Controllers
             return Ok(categoryDto);
         }
 
+        [Authorize]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<CategoryDTO>> Delete(int id)
         {

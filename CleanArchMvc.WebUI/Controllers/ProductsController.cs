@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers
@@ -17,14 +20,73 @@ namespace CleanArchMvc.WebUI.Controllers
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IWebHostEnvironment _environment;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public ProductsController(IProductService productAppService,
-            ICategoryService categoryService, IWebHostEnvironment environment)
+            ICategoryService categoryService, IWebHostEnvironment environment, 
+            IHttpClientFactory httpClientFactory)
         {
             _productService = productAppService;
             _categoryService = categoryService;
             _environment = environment;
+            _httpClientFactory = httpClientFactory;
         }
+
+        public async Task<IActionResult> API()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FetchData(string method, string id)
+        {
+            ModelState.Remove("Category");
+            string apiUrl = "https://localhost:44363/api/Products";
+
+            // Se o método selecionado for GetById e um ID válido for fornecido, ajuste a URL da API
+            if (method == "GetById" && !string.IsNullOrEmpty(id))
+            {
+                apiUrl += "/" + id;
+            }
+
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonContent = await response.Content.ReadAsStringAsync();
+
+                // Se o método selecionado for GetById, desserialize o produto individualmente
+                if (method == "GetById")
+                {
+                    var product = JsonConvert.DeserializeObject<ProductDTO>(jsonContent, new JsonSerializerSettings
+                    {
+                        ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver
+                        {
+                            NamingStrategy = new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy()
+                        }
+                    });
+                    return View("API", new List<ProductDTO> { product }); // Retornar uma lista com um único produto
+                }
+                else // Caso contrário, desserialize a lista de produtos
+                {
+                    var products = JsonConvert.DeserializeObject<IEnumerable<ProductDTO>>(jsonContent, new JsonSerializerSettings
+                    {
+                        ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver
+                        {
+                            NamingStrategy = new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy()
+                        }
+                    });
+                    return View("API", products);
+                }
+            }
+            else
+            {
+                return View("API");
+            }
+        }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -34,6 +96,7 @@ namespace CleanArchMvc.WebUI.Controllers
         }
 
         // GET: ProductsController/Create/5
+        [Authorize(Roles = "Admin")]
         [HttpGet()]
         public async Task<IActionResult> Create()
         {
@@ -84,15 +147,18 @@ namespace CleanArchMvc.WebUI.Controllers
             dataTable.Columns.Add("Price", typeof(decimal));
             dataTable.Columns.Add("Stock", typeof(int));
             dataTable.Columns.Add("Image", typeof(string));
-            dataTable.Columns.Add("Category", typeof(CategoryDTO));
+            dataTable.Columns.Add("Category", typeof(string));
             dataTable.Columns.Add("CategoryId", typeof(int));
 
             var dados = await _productService.GetProductsAsync();
             if (dados.Any())
             {
+                var categoryDictionary = (await _categoryService.GetCategoriesAsync()).ToDictionary(c => c.Id, c => c.Name);
                 foreach (var product in dados) 
                 {
-                    dataTable.Rows.Add(product.Id, product.Name, product.Description, product.Price, product.Stock, product.Image, product.Category, product.CategoryId);
+
+                    var categoryName = product.CategoryId.HasValue ? categoryDictionary.GetValueOrDefault(product.CategoryId.Value, "N/A") : "N/A";
+                    dataTable.Rows.Add(product.Id, product.Name, product.Description, product.Price, product.Stock, product.Image, categoryName, product.CategoryId);
                 }
             }
 
@@ -101,6 +167,7 @@ namespace CleanArchMvc.WebUI.Controllers
 
 
         // GET: ProductsController/Edit/5
+        [Authorize(Roles = "Admin")]
         [HttpGet()]
         public async Task<IActionResult> Edit(int? id)
         {

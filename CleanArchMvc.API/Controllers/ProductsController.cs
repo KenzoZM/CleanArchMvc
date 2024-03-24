@@ -8,7 +8,6 @@ namespace CleanArchMvc.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -39,6 +38,7 @@ namespace CleanArchMvc.API.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ProductDTO productDto)
         {
@@ -50,6 +50,7 @@ namespace CleanArchMvc.API.Controllers
             return new CreatedAtRouteResult("GetProduct", new { id = productDto.Id }, productDto);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] ProductDTO productDto)
         {
@@ -63,6 +64,7 @@ namespace CleanArchMvc.API.Controllers
             return Ok(productDto);
         }
 
+        [Authorize]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<ProductDTO>> Delete(int id)
         {
