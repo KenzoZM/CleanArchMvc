@@ -110,6 +110,7 @@ Ele foi construído seguindo os princípios da Clean Architecture, que visa deix
 - **Autenticação e Autorização:** Implementa autenticação e autorização via Identity, onde apenas o administrador tem acesso aos métodos de editar, deletar e criar.
 - **Exportação de Dados para o Excel:** Inclui um método para exportar dados para o formato Excel.
 - **API RESTful:** Além da interface web, o projeto também inclui uma camada de Web API com métodos RESTful para manipulação dos dados, utilizando autenticação JWT Bearer.
+- **Consumindo Métodos da API na view** Também é possível consumir os métodos Get/GetById nas páginas web na camada de apresentação. Obs(**para executar essa função primeiro é necessário que você execute o projeto CleanArchMvc.API para executar a API local**).
 
 ### Clean Architecture
 
@@ -126,7 +127,7 @@ A arquitetura do projeto segue os princípios da Clean Architecture, que visa se
 Este projeto foi desenvolvido como parte de um curso sobre Clean Architecture e boas práticas de desenvolvimento em ASP.NET Core. 
 O curso cobre desde os conceitos fundamentais da arquitetura limpa até a implementação de padrões de design como Repository e CQRS, além de abordar migrações para versões mais recentes do .NET.
 
-Para mais informações sobre o curso e os conceitos abordados, consulte [https://www.udemy.com/share/104Fju3@EnFCbKISK5ThGDTadv8qy9VHhv2rCNA2Ej-ATEq7i6PAsmfgGiCPowcfyYM1Vq1IEA==/].
+Para mais informações sobre o curso e os conceitos abordados, consulte [Curso Base](https://www.udemy.com/share/104Fju3@EnFCbKISK5ThGDTadv8qy9VHhv2rCNA2Ej-ATEq7i6PAsmfgGiCPowcfyYM1Vq1IEA==/).
 
 ## Contribuindo
 
