@@ -8,13 +8,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient("ApiClient", client =>
 {
-    client.BaseAddress = new Uri("ApiBaseUrl"); // altere a Url com base na sua Url de acesso.
-                                                // Para identificar a sua Url abra o pasta
-                                                // Properties e lauchSettings.json na camada CleanArchMvc.API
-                                                // lá você verá a sua URL baseada em qual padrão vc está executando o projeto 
-                                                // por exemplo http ou https.
-                                                // depois de pegar a sua URL vá até a camadam CleanArchMvc.Infra.Ioc
-                                                // e altere a sua ApiBaseUrl com o valor da sua URL.
+    client.BaseAddress = new Uri("ApiBaseUrl");
 });
 
 var app = builder.Build();
